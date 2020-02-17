@@ -2,6 +2,7 @@ import flat from "array.prototype.flat";
 import clc from "cli-color";
 import commander from "commander";
 import fs from "fs";
+import globby from "globby";
 import { parser as depsJsParser } from "google-closure-deps";
 import difference from "lodash.difference";
 import path from "path";
@@ -9,7 +10,6 @@ import { promisify } from "util";
 import Logger, { LogOutput } from "./clilogger";
 import { fixInPlace } from "./fix";
 import { Parser } from "./parser";
-import globby from "globby";
 
 // Dont't use `import from` to avoid creating nested directory `./lib/src`.
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -123,7 +123,7 @@ export function resolveConfig({
 
 async function getFiles(args: string[]): Promise<string[]> {
   return globby(args, {
-    expandDirectories: { files: ["*"], extensions: ["js"] },
+    expandDirectories: { extensions: ["js"] },
   });
 }
 
